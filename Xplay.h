@@ -11,5 +11,5 @@ public:
     Xplay(QWidget *parent = Q_NULLPTR);
 
 private:
-    Ui::XplayClass ui;
+    Ui::XplayClass ui {};
 };
