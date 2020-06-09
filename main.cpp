@@ -1,8 +1,6 @@
 #include <iostream>
 #include <QtWidgets/QApplication>
 #include <QThread>
-
-
 #include "XAudioPlay.h"
 #include "XDecode.h"
 #include "Xplay.h"
@@ -17,10 +15,8 @@ class TestThread : public QThread
 public:
 	void Init()
 	{
-		//œ„∏€Œ¿ ”
 		char* url = "2.mp4";
-		
-		
+
 		cout << "demux.Open = " << demux.Open(url);
 		cout << "CopyVPara = " << demux.CopyVPara() << endl;
 		cout << "CopyAPara = " << demux.CopyAPara() << endl;
@@ -50,7 +46,7 @@ public:
 			if (demux.IsAudio(pkt))
 			{
 				adecode.Send(pkt);
-				AVFrame *frame = adecode.Recv();
+				AVFrame* frame = adecode.Recv();
 				int len = resample.Resample(frame, pcm);
 				cout << "Resample:" << len << " ";
 				while (len > 0)
