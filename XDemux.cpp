@@ -75,6 +75,10 @@ bool XDemux::Open(const char* url)
 	//»ñÈ¡ÒôÆµÁ÷
 	audioStream = av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
 	as = ic->streams[audioStream];
+	
+	sampleRate = as->codecpar->sample_rate;
+	channels = as->codecpar->channels;
+	
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
 	cout << "format = " << as->codecpar->format << endl;
 	cout << "sample_rate = " << as->codecpar->sample_rate << endl;
