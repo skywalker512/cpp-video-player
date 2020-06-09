@@ -45,6 +45,35 @@ public:
 			return true;
 		return false;
 	}
+
+	bool Write(const unsigned char* data, int datasize) override
+	{
+		if (!data || datasize <= 0)return false;
+		mux.lock();
+		if (!output || !io)
+		{
+			mux.unlock();
+			return false;
+		}
+		int size = io->write((char*)data, datasize);
+		mux.unlock();
+		if (datasize != size)
+			return false;
+		return true;
+	}
+
+	int GetFree() override
+	{
+		mux.lock();
+		if (!output)
+		{
+			mux.unlock();
+			return 0;
+		}
+		int free = output->bytesFree();
+		mux.unlock();
+		return free;
+	}
 };
 
 XAudioPlay* XAudioPlay::Get()

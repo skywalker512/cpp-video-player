@@ -50,8 +50,18 @@ public:
 			if (demux.IsAudio(pkt))
 			{
 				adecode.Send(pkt);
-				AVFrame* frame = adecode.Recv();
-				cout << "Resample:" << resample.Resample(frame, pcm) << " ";
+				AVFrame *frame = adecode.Recv();
+				int len = resample.Resample(frame, pcm);
+				cout << "Resample:" << len << " ";
+				while (len > 0)
+				{
+					if (XAudioPlay::Get()->GetFree() >= len)
+					{
+						XAudioPlay::Get()->Write(pcm, len);
+						break;
+					}
+					msleep(1);
+				}
 				//cout << "Audio:" << frame << endl;
 			}
 			else
@@ -59,7 +69,6 @@ public:
 				vdecode.Send(pkt);
 				AVFrame* frame = vdecode.Recv();
 				video->Repaint(frame);
-				msleep(40);
 				//cout << "Video:" << frame << endl;
 			}
 			if (!pkt)break;
