@@ -1,25 +1,39 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>XplayClass</class>
- <widget class="QWidget" name="XplayClass" >
-  <property name="objectName" >
-   <string notr="true">XplayClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="XplayClass">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>908</width>
+    <height>649</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Xplay</string>
-  </property>$centralwidget$
+  </property>
+  <widget class="XVideoWidget" name="video">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>20</y>
+     <width>800</width>
+     <height>600</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>XVideoWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>XVideoWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
-   <include location="Xplay.qrc"/>
+  <include location="Xplay.qrc"/>
  </resources>
  <connections/>
-</UI>
+</ui>

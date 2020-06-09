@@ -93,6 +93,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="XVideoWidget.cpp" />
     <QtRcc Include="Xplay.qrc" />
     <QtUic Include="Xplay.ui" />
     <QtMoc Include="Xplay.h" />
@@ -104,6 +105,7 @@
   <ItemGroup>
     <ClInclude Include="XDecode.h" />
     <ClInclude Include="XDemux.h" />
+    <QtMoc Include="XVideoWidget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

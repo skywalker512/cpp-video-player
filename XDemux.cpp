@@ -58,6 +58,9 @@ bool XDemux::Open(const char* url)
 	videoStream = av_find_best_stream(ic, AVMEDIA_TYPE_VIDEO, -1, -1, nullptr, 0);
 	AVStream* as = ic->streams[videoStream];
 
+	width = as->codecpar->width;
+	height = as->codecpar->height;
+	
 	cout << "=======================================================" << endl;
 	cout << videoStream << "ÊÓÆµĞÅÏ¢" << endl;
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
@@ -109,6 +112,14 @@ AVPacket* XDemux::Read()
 	mux.unlock();
 	cout << pkt->pts << " " << flush;
 	return pkt;
+}
+
+bool XDemux::IsAudio(AVPacket* pkt)
+{
+	if (!pkt) return false;
+	if (pkt->stream_index == videoStream)
+		return false;
+	return true;
 }
 
 

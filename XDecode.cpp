@@ -56,7 +56,7 @@ bool XDecode::Open(AVCodecParameters* para)
 	codec->thread_count = 8;
 
 	///打开解码器上下文
-	int re = avcodec_open2(codec, nullptr, 0);
+	int re = avcodec_open2(codec, nullptr, nullptr);
 	if (re != 0)
 	{
 		avcodec_free_context(&codec);
@@ -69,6 +69,45 @@ bool XDecode::Open(AVCodecParameters* para)
 	mux.unlock();
 	cout << " avcodec_open2 success!" << endl;
 	return true;
+}
+
+//发送到解码线程，不管成功与否都释放pkt空间（对象和媒体内容）
+bool XDecode::Send(AVPacket* pkt)
+{
+	//容错处理
+	if (!pkt || pkt->size <= 0 || !pkt->data)return false;
+	mux.lock();
+	if (!codec)
+	{
+		mux.unlock();
+		return false;
+	}
+	int re = avcodec_send_packet(codec, pkt);
+	mux.unlock();
+	av_packet_free(&pkt);
+	if (re != 0)return false;
+	return true;
+}
+
+//获取解码数据，一次send可能需要多次Recv，获取缓冲中的数据Send NULL在Recv多次
+//每次复制一份，由调用者释放 av_frame_free
+AVFrame* XDecode::Recv()
+{
+	mux.lock();
+	if (!codec)
+	{
+		mux.unlock();
+		return nullptr;
+	}
+	AVFrame* frame = av_frame_alloc();
+	int re = avcodec_receive_frame(codec, frame);
+	mux.unlock();
+	if (re != 0)
+	{
+		av_frame_free(&frame);
+		return nullptr;
+	}
+	return frame;
 }
 
 XDecode::XDecode()

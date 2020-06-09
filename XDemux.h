@@ -15,6 +15,8 @@ public:
 	//空间需要调用者释放 ，释放AVPacket对象空间，和数据空间 av_packet_free
 	virtual AVPacket* Read();
 
+	virtual bool IsAudio(AVPacket *pkt);
+	
 	XDemux();
 	virtual ~XDemux();
 
@@ -34,6 +36,8 @@ public:
 
 	//媒体总时长（毫秒）
 	int totalMs = 0;
+	int height = 0;
+	int width = 0;
 protected:
 	std::mutex mux;
 	//解封装上下文
