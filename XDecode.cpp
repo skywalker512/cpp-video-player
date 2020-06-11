@@ -15,6 +15,7 @@ void XDecode::Close()
 		avcodec_close(codec);
 		avcodec_free_context(&codec);
 	}
+	pts = 0;
 	mux.unlock();
 }
 
@@ -107,6 +108,7 @@ AVFrame* XDecode::Recv()
 		av_frame_free(&frame);
 		return nullptr;
 	}
+	pts = frame->pts;
 	return frame;
 }
 

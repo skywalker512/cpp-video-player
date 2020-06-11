@@ -55,7 +55,7 @@ public:
 			mux.unlock();
 			return false;
 		}
-		int size = io->write((char*)data, datasize);
+		const int size = io->write((char*)data, datasize);
 		mux.unlock();
 		if (datasize != size)
 			return false;

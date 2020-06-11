@@ -53,6 +53,15 @@
     <ClCompile Include="XAudioPlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="XAudioThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XVideoThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XDemuxThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Xplay.qrc" />
@@ -68,6 +77,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XAudioPlay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XAudioThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XVideoThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IVideoCall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XDemuxThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

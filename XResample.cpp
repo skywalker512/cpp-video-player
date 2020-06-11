@@ -18,7 +18,7 @@ void XResample::Close()
 }
 
 //输出参数和输入参数一致除了采样格式，输出为S16
-bool XResample::Open(AVCodecParameters* para)
+bool XResample::Open(AVCodecParameters* para, bool isClearPara)
 {
 	if (!para)return false;
 	mux.lock();
@@ -36,7 +36,12 @@ bool XResample::Open(AVCodecParameters* para)
 	                          para->sample_rate,
 	                          0, nullptr
 	);
-	avcodec_parameters_free(&para);
+
+	if (isClearPara)
+	{
+		avcodec_parameters_free(&para);
+	}
+
 	int re = swr_init(actx);
 	mux.unlock();
 	if (re != 0)

@@ -73,7 +73,6 @@ void XVideoWidget::Repaint(AVFrame* frame)
 	mux.unlock();
 	av_frame_free(&frame);
 
-
 	//刷新显示
 	update();
 }
@@ -184,30 +183,11 @@ void XVideoWidget::initializeGL()
 	unis[2] = program.uniformLocation("tex_v");
 
 	mux.unlock();
-
-	//fp = fopen("out240x128.yuv", "rb");
-	//if (!fp)
-	//{
-	//	qDebug() << "out240x128.yuv file open failed!";
-	//}
-
-
-	////启动定时器
-	//QTimer *ti = new QTimer(this);
-	//connect(ti, SIGNAL(timeout()), this, SLOT(update()));
-	//ti->start(40);
 }
 
 //刷新显示
 void XVideoWidget::paintGL()
 {
-	//if (feof(fp))
-	//{
-	//	fseek(fp, 0, SEEK_SET);
-	//}
-	//fread(datas[0], 1, width*height, fp);
-	//fread(datas[1], 1, width*height / 4, fp);
-	//fread(datas[2], 1, width*height / 4, fp);
 	mux.lock();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texs[0]); //0层绑定到Y材质
