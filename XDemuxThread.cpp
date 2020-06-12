@@ -38,6 +38,7 @@ void XDemuxThread::run()
 		else //视频
 		{
 			if (vt)vt->Push(pkt);
+			msleep(1);
 		}
 		mux.unlock();
 	}
@@ -83,12 +84,13 @@ void XDemuxThread::Start()
 {
 	mux.lock();
 	if (!demux) demux = new XDemux();
-	if (!vt) vt = new XVideoThread();
 	if (!at) at = new XAudioThread();
+	if (!vt) vt = new XVideoThread();
 	//启动当前线程
 	start();
-	if (vt)vt->start();
 	if (at)at->start();
+	if (vt)vt->start();
+
 	mux.unlock();
 }
 

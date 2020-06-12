@@ -62,6 +62,9 @@
     <ClCompile Include="XDemuxThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="XDecodeThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Xplay.qrc" />
@@ -89,6 +92,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XDemuxThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XDecodeThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

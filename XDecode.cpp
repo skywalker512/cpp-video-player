@@ -1,5 +1,7 @@
 #include "XDecode.h"
 
+#include <QDebug>
+
 extern "C" {
 #include<libavcodec/avcodec.h>
 }
@@ -76,7 +78,7 @@ bool XDecode::Open(AVCodecParameters* para)
 bool XDecode::Send(AVPacket* pkt)
 {
 	//ÈÝ´í´¦Àí
-	if (!pkt || pkt->size <= 0 || !pkt->data)return false;
+	if (!pkt || pkt->size <= 0)return false;
 	mux.lock();
 	if (!codec)
 	{

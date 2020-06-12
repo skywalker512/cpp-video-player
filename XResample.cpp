@@ -23,8 +23,8 @@ bool XResample::Open(AVCodecParameters* para, bool isClearPara)
 	if (!para)return false;
 	mux.lock();
 	//音频重采样 上下文初始化
-	//if(!actx)
-	//	actx = swr_alloc();
+	// if(!actx)
+	// 	actx = swr_alloc();
 
 	//如果actx为NULL会分配空间
 	actx = swr_alloc_set_opts(actx,
@@ -68,7 +68,7 @@ int XResample::Resample(AVFrame* indata, unsigned char* d)
 	data[0] = d;
 	int re = swr_convert(actx,
 	                     data, indata->nb_samples, //输出
-	                     (const uint8_t**)indata->data, indata->nb_samples //输入
+	                     const_cast<const uint8_t**>(indata->data), indata->nb_samples //输入
 	);
 	if (re <= 0)return re;
 	int outSize = re * indata->channels * av_get_bytes_per_sample(static_cast<AVSampleFormat>(outFormat));
