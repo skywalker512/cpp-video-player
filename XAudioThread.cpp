@@ -3,6 +3,9 @@
 #include "XAudioPlay.h"
 #include "XResample.h"
 #include <iostream>
+extern "C" {
+#include <libavutil/frame.h>
+}
 using namespace std;
 
 void XAudioThread::Push(AVPacket* pkt)
@@ -87,8 +90,13 @@ void XAudioThread::run()
 		{
 			AVFrame* frame = decode->Recv();
 			if (!frame) break;
+
+			//减去缓冲中未播放的时间
+			pts = decode->pts - ap->GetNoPlayMs();
+
 			//重采样 
 			int size = res->Resample(frame, pcm);
+			av_frame_free(&frame);
 			//播放音频
 			while (!isExit)
 			{
@@ -104,6 +112,7 @@ void XAudioThread::run()
 			}
 		}
 		mux.unlock();
+		msleep(1);
 	}
 	delete[] pcm;
 }

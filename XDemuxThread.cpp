@@ -11,6 +11,12 @@ void XDemuxThread::run()
 	while (!isExit)
 	{
 		mux.lock();
+		
+		//ÒôÊÓÆµÍ¬²½
+		if (vt && at)
+		{
+			vt->synpts = at->pts;
+		}
 		if (!demux)
 		{
 			mux.unlock();
@@ -33,7 +39,6 @@ void XDemuxThread::run()
 		{
 			if (vt)vt->Push(pkt);
 		}
-
 		mux.unlock();
 	}
 }

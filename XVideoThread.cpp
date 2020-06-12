@@ -8,7 +8,7 @@ bool XVideoThread::Open(AVCodecParameters* para, IVideoCall* call, int width, in
 {
 	if (!para)return false;
 	mux.lock();
-
+	synpts = 0;
 	//初始化显示窗口
 	this->call = call;
 	if (call)
@@ -61,6 +61,15 @@ void XVideoThread::run()
 			continue;
 		}
 
+		//音视频同步
+		if (synpts < decode->pts)
+		{
+			mux.unlock();
+			msleep(1);
+			continue;
+		}
+
+
 		AVPacket* pkt = packs.front();
 		packs.pop_front();
 		bool re = decode->Send(pkt);
@@ -82,6 +91,7 @@ void XVideoThread::run()
 			}
 		}
 		mux.unlock();
+		msleep(1);
 	}
 }
 

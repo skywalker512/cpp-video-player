@@ -108,6 +108,7 @@ AVFrame* XDecode::Recv()
 		av_frame_free(&frame);
 		return nullptr;
 	}
+	// 接收的 frame 是 XDemux::Read() 发送出来的 已经转换成 ms 了
 	pts = frame->pts;
 	return frame;
 }

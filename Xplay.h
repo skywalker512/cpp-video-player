@@ -12,6 +12,6 @@ public:
 
 public slots:
 	void OpenFile();
-public:
+private:
     Ui::XplayClass ui {};
 };
