@@ -32,6 +32,30 @@ void Xplay::timerEvent(QTimerEvent* e)
 	}
 }
 
+void Xplay::resizeEvent(QResizeEvent* e)
+{
+	// 移动控件位置
+	ui.playPos->move(50, this->height() - 50);
+	ui.openFile->move(50, this->height() - 100);
+
+	// 滑动条宽度变化
+	ui.playPos->resize(this->width() - 100, ui.playPos->height());
+	// video 进行尺寸变化
+	ui.video->resize(this->size());
+}
+
+void Xplay::mouseDoubleClickEvent(QMouseEvent* e)
+{
+	if (isFullScreen())
+	{
+		this->showNormal();
+	}
+	else
+	{
+		this->showFullScreen();
+	}
+}
+
 void Xplay::OpenFile()
 {
 	// 选择文件
