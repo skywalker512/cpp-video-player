@@ -15,6 +15,7 @@ void XDemuxThread::run()
 		//ÒôÊÓÆµÍ¬²½
 		if (vt && at)
 		{
+			pts = at->pts;
 			vt->synpts = at->pts;
 		}
 		if (!demux)
@@ -74,6 +75,7 @@ bool XDemuxThread::Open(const char* url, IVideoCall* call)
 		re = false;
 		cout << "at->Open failed!" << endl;
 	}
+	totalMs = demux->totalMs;
 	mux.unlock();
 	cout << "XDemuxThread::Open " << re << endl;
 	return re;
