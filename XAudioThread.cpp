@@ -23,7 +23,6 @@ void XAudioThread::Push(AVPacket* pkt)
 			break;
 		}
 		mux.unlock();
-		msleep(1);
 	}
 }
 

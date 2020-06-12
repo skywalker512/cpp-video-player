@@ -43,7 +43,6 @@ void XVideoThread::Push(AVPacket* pkt)
 			break;
 		}
 		mux.unlock();
-		msleep(1);
 	}
 }
 
@@ -91,7 +90,6 @@ void XVideoThread::run()
 			}
 		}
 		mux.unlock();
-		msleep(1);
 	}
 }
 

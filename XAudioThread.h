@@ -20,7 +20,7 @@ public:
 	virtual ~XAudioThread();
 
 	//最大队列
-	unsigned long long maxList = 100;
+	unsigned long long maxList = 50;
 	// 线程退出标志量
 	bool isExit = false;
 protected:
