@@ -1,6 +1,7 @@
 #include "XVideoThread.h"
 #include "XDecode.h"
 #include <iostream>
+#include <QDebug>
 using namespace std;
 //打开，不管成功与否都清理
 bool XVideoThread::Open(AVCodecParameters* para, IVideoCall* call, int width, int height)

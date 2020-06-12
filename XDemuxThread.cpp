@@ -3,6 +3,7 @@
 #include "XVideoThread.h"
 #include "XAudioThread.h"
 #include <iostream>
+#include <QDebug>
 using namespace std;
 
 void XDemuxThread::run()
@@ -76,6 +77,9 @@ bool XDemuxThread::Open(const char* url, IVideoCall* call)
 void XDemuxThread::Start()
 {
 	mux.lock();
+	if (!demux) demux = new XDemux();
+	if (!vt) vt = new XVideoThread();
+	if (!at) at = new XAudioThread();
 	//启动当前线程
 	start();
 	if (vt)vt->start();

@@ -1,17 +1,15 @@
 #include "Xplay.h"
-#include "XDemuxThread.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+	// ui 组件 继承 QWidget
 	Xplay w;
+	// 显示窗口
 	w.show();
 
-	XDemuxThread dt;
-	dt.Open("2.mp4", w.ui.video);
-	dt.Start();
-
+	// qt 主线程循环
 	return a.exec();
 }

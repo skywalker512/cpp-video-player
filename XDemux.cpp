@@ -89,7 +89,6 @@ bool XDemux::Open(const char* url)
 	//1024 * 2 * 2 = 4096  fps = sample_rate/frame_size
 	mux.unlock();
 
-
 	return true;
 }
 
@@ -114,7 +113,7 @@ AVPacket* XDemux::Read()
 	pkt->pts = pkt->pts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
 	pkt->dts = pkt->dts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
 	mux.unlock();
-	cout << pkt->pts << " " << flush;
+	// cout << pkt->pts << " " << flush;
 	return pkt;
 }
 

@@ -72,7 +72,7 @@ void XVideoWidget::Repaint(AVFrame* frame)
 	memcpy(datas[2], frame->data[2], width*height / 4);
 	mux.unlock();
 	av_frame_free(&frame);
-
+	// qDebug() << "update";
 	//Ë¢ÐÂÏÔÊ¾
 	update();
 }
@@ -213,7 +213,7 @@ void XVideoWidget::paintGL()
 	glUniform1i(unis[2], 2);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	qDebug() << "paintGL";
+	// qDebug() << "paintGL";
 	mux.unlock();
 }
 
