@@ -11,7 +11,7 @@ void XDemuxThread::run()
 	while (!isExit)
 	{
 		mux.lock();
-		
+
 		//音视频同步
 		if (vt && at)
 		{
@@ -38,7 +38,7 @@ void XDemuxThread::run()
 		else //视频
 		{
 			if (vt)vt->Push(pkt);
-			msleep(1);
+			// msleep(1);
 		}
 		mux.unlock();
 	}
@@ -91,6 +91,20 @@ void XDemuxThread::Start()
 	if (at)at->start();
 	if (vt)vt->start();
 
+	mux.unlock();
+}
+
+void XDemuxThread::Close()
+{
+	isExit = true;
+	wait();
+	if (vt) vt->Close();
+	if (at) at->Close();
+	mux.lock();
+	delete vt;
+	delete at;
+	vt = nullptr;
+	at = nullptr;
 	mux.unlock();
 }
 

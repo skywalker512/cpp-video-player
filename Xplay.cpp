@@ -14,6 +14,11 @@ Xplay::Xplay(QWidget *parent)
 	dt.Start();
 }
 
+Xplay::~Xplay()
+{
+	dt.Close();
+}
+
 void Xplay::OpenFile()
 {
 	// Ñ¡ÔñÎÄ¼ş

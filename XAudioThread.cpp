@@ -4,6 +4,7 @@
 #include "XResample.h"
 #include <iostream>
 #include <QDebug>
+
 extern "C" {
 #include <libavutil/frame.h>
 }
@@ -13,6 +14,7 @@ using namespace std;
 bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 {
 	if (!para)return false;
+	Clear();
 	amux.lock();
 	// 不受上次影响
 	pts = 0;
@@ -41,6 +43,26 @@ bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 	return re;
 }
 
+void XAudioThread::Close()
+{
+	XDecodeThread::Close();
+	if (res)
+	{
+		res->Close();
+		amux.lock();
+		delete res;
+		res = nullptr;
+		amux.unlock();
+	}
+	if (ap)
+	{
+		ap->Close();
+		amux.lock();
+		ap = nullptr;
+		amux.unlock();
+	}
+}
+
 void XAudioThread::run()
 {
 	auto* pcm = new unsigned char[1024 * 1024 * 10];
@@ -66,7 +88,6 @@ void XAudioThread::run()
 
 			//重采样 
 			int size = res->Resample(frame, pcm);
-			av_frame_free(&frame);
 			//播放音频
 			while (!isExit)
 			{
@@ -77,7 +98,7 @@ void XAudioThread::run()
 					msleep(1);
 					continue;
 				}
-				
+
 				ap->Write(pcm, size);
 				break;
 			}

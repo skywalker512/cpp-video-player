@@ -31,6 +31,12 @@ void XDecode::Clear()
 	mux.unlock();
 }
 
+void XFreePacket(AVPacket** pkt)
+{
+	if (pkt || (*pkt))return;
+	av_packet_free(pkt);
+}
+
 //´ò¿ª½âÂëÆ÷
 bool XDecode::Open(AVCodecParameters* para)
 {

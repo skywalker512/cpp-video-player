@@ -1,7 +1,8 @@
 #include "XDecodeThread.h"
 #include "XDecode.h"
 #include <QDebug>
-void XDecodeThread::Push(AVPacket *pkt)
+
+void XDecodeThread::Push(AVPacket* pkt)
 {
 	if (!pkt)return;
 	//阻塞
@@ -18,15 +19,42 @@ void XDecodeThread::Push(AVPacket *pkt)
 	}
 }
 
+void XDecodeThread::Clear()
+{
+	mux.lock();
+	decode->Clear();
+	while (!packs.empty())
+	{
+		AVPacket* pkt = packs.front();
+		XFreePacket(&pkt);
+		packs.pop_front();
+	}
+	mux.unlock();
+}
+
+void XDecodeThread::Close()
+{
+	Clear();
+	isExit = true;
+	wait();
+
+	decode->Close();
+
+	mux.lock();
+	delete decode;
+	decode = nullptr;
+	mux.unlock();
+}
+
 AVPacket* XDecodeThread::Pop()
 {
 	mux.lock();
 	if (packs.empty())
 	{
 		mux.unlock();
-		return NULL;
+		return nullptr;
 	}
-	AVPacket *pkt = packs.front();
+	AVPacket* pkt = packs.front();
 	packs.pop_front();
 	mux.unlock();
 	return pkt;
@@ -40,7 +68,8 @@ XDecodeThread::XDecodeThread()
 
 
 XDecodeThread::~XDecodeThread()
-{	//等待线程退出
+{
+	//等待线程退出
 	isExit = true;
 	wait();
 }
