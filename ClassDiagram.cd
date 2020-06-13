@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IVideoCall">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>IVideoCall.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XAudioPlay">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAQAAQAAIABAAAgAAAACAAAAAAAIAAgQAAHAAAA=</HashCode>
+      <FileName>XAudioPlay.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XAudioThread">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIAgAAAIAAAAAIAAAACAAAAAEAAACAAEBDAAAA=</HashCode>
+      <FileName>XAudioThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XDecode">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAABAAACIAEAAEAAAAAAAIAAAEEAAAAAAADAAAA=</HashCode>
+      <FileName>XDecode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XDecodeThread">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAACBAAAAAAAAABAAAAAAAACAAABAAIAAAADACAA=</HashCode>
+      <FileName>XDecodeThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XDemux">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAQYBAAAAIAYASAQACBAgAAAAABAAAAARAADAAAA=</HashCode>
+      <FileName>XDemux.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XDemuxThread">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIRgCAAICAACAAAAAACBAAAAEABgIAAAADAAAA=</HashCode>
+      <FileName>XDemuxThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Xplay">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAAAAECAAEAAAAAAAAAACAAAAYAAAAAAAAYAAAAA=</HashCode>
+      <FileName>Xplay.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XResample">
+    <Position X="4.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAABAAAAMAAAAAAAAAAAAABAAAAAAACAAAGAAAA=</HashCode>
+      <FileName>XResample.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XVideoThread">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAgEAAIAAAAAAAAAACACAAYAAAACAAAAAAAAA=</HashCode>
+      <FileName>XVideoThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XVideoWidget">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAMABAABAAAYCQCAAAAAAAAAACABAACAAAAAAAAE=</HashCode>
+      <FileName>XVideoWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CXAudioPlay">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAABAAAAIAAAAAAAQAACCAAAAAAIAAAAAAHAAAA=</HashCode>
+      <FileName>XAudioPlay.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
