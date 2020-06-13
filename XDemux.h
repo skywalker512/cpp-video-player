@@ -40,11 +40,11 @@ public:
 	int width = 0;
 	int sampleRate = 0;
 	int channels = 0;
+	int videoStream = 0;
+	int audioStream = 1;
 protected:
 	std::mutex mux;
 	//解封装上下文
 	AVFormatContext* ic = nullptr;
 	//音视频索引，读取时区分音视频
-	int videoStream = 0;
-	int audioStream = 1;
 };

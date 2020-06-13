@@ -63,6 +63,15 @@ void XAudioThread::Close()
 	}
 }
 
+void XAudioThread::Clear()
+{
+	XDecodeThread::Clear();
+	if (ap)
+	{
+		ap->Clear();
+	}
+}
+
 void XAudioThread::run()
 {
 	auto* pcm = new unsigned char[1024 * 1024 * 10];
@@ -127,11 +136,9 @@ XAudioThread::~XAudioThread()
 
 void XAudioThread::SetPause(bool isPause)
 {
-	// amux.lock();
 	this->isPause = isPause;
 	if (ap)
 	{
 		ap->SetPause(isPause);
 	}
-	// amux.unlock();
 }

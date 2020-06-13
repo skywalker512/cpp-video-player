@@ -21,7 +21,7 @@ public:
 	long long synpts = 0;
 	void SetPause(bool isPause);
 	bool isPause = false;
+	IVideoCall* call = nullptr;
 protected:
 	std::mutex vmux;
-	IVideoCall* call = nullptr;
 };

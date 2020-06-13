@@ -4,6 +4,13 @@
 #include "XAudioThread.h"
 #include <iostream>
 #include <QDebug>
+
+extern "C" {
+#include <libavformat/avformat.h>
+}
+
+#include "XDecode.h"
+
 using namespace std;
 
 void XDemuxThread::run()
@@ -17,13 +24,6 @@ void XDemuxThread::run()
 			mux.unlock();
 			msleep(5);
 			continue;
-		}
-
-		//音视频同步
-		if (vt && at)
-		{
-			pts = at->pts;
-			vt->synpts = at->pts;
 		}
 		if (!demux)
 		{
@@ -41,12 +41,11 @@ void XDemuxThread::run()
 		//判断数据是音频
 		if (demux->IsAudio(pkt))
 		{
-			if (at)at->Push(pkt);
+			if (at)at->Push(pkt, at, vt, pts);
 		}
 		else //视频
 		{
-			if (vt)vt->Push(pkt);
-			// msleep(1);
+			if (vt)vt->Push(pkt, at, vt, pts);
 		}
 		mux.unlock();
 	}
@@ -117,6 +116,71 @@ void XDemuxThread::Close()
 	mux.unlock();
 }
 
+void XDemuxThread::Clear()
+{
+	mux.lock();
+	if (demux)
+	{
+		demux->Clear();
+	}
+	if (at)
+	{
+		at->Clear();
+	}
+	if (vt)
+	{
+		vt->Clear();
+	}
+	mux.unlock();
+}
+
+void XDemuxThread::Seek(double pos)
+{
+	Clear();
+	mux.lock();
+	auto status = this->isPause;
+	mux.unlock();
+	//暂停
+	SetPause(true);
+
+	mux.lock();
+	if (demux)
+	{
+		demux->Seek(pos);
+	}
+	//实际要显示的位置pts
+	long long seekPts = pos * demux->totalMs;
+	while (!isExit)
+	{
+		AVPacket* pkt = demux->Read();
+		if (!pkt) break;
+		if (pkt->stream_index == demux->audioStream)
+		{
+			av_packet_free(&pkt);
+			continue;
+		}
+		//如果解码到seekPts
+		auto re = vt->decode->Send(pkt);
+		if (!re) break;
+		auto* frame = vt->decode->Recv();
+		if (!frame) continue;
+		//到达位置
+		if (frame->pts >= seekPts)
+		{
+			this->pts = frame->pts;
+			vt->call->Repaint(frame);
+			break;
+		}
+		av_frame_free(&frame);
+	}
+
+	mux.unlock();
+
+	//seek是非暂停状态
+	if (!status)
+		SetPause(false);
+}
+
 XDemuxThread::XDemuxThread()
 {
 }
@@ -130,7 +194,6 @@ XDemuxThread::~XDemuxThread()
 
 void XDemuxThread::SetPause(bool isPause)
 {
-	mux.lock();
 	this->isPause = isPause;
 	if (at)
 	{
@@ -140,5 +203,4 @@ void XDemuxThread::SetPause(bool isPause)
 	{
 		vt->SetPause(isPause);
 	}
-	mux.unlock();
 }

@@ -12,7 +12,8 @@ public:
 	long long pts = 0;
 	//打开，不管成功与否都清理
 	virtual bool Open(AVCodecParameters* para, int sampleRate, int channels);
-	virtual void Close();
+	void Close() override;
+	void Clear() override;
 	void run() override;
 	XAudioThread();
 	virtual ~XAudioThread();

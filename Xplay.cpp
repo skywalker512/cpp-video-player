@@ -22,6 +22,10 @@ Xplay::~Xplay()
 
 void Xplay::timerEvent(QTimerEvent* e)
 {
+	if (isSliderPress)
+	{
+		return;
+	}
 	auto total = dt.totalMs;
 
 	if (total > 0)
@@ -62,7 +66,8 @@ void Xplay::SetPause(bool isPause)
 	if (isPause)
 	{
 		ui.isplay->setText(QString::fromLocal8Bit("²¥·Å"));
-	} else
+	}
+	else
 	{
 		ui.isplay->setText(QString::fromLocal8Bit("ÔÝÍ£"));
 	}
@@ -87,4 +92,17 @@ void Xplay::PlayOrPause()
 	auto isPause = !dt.isPause;
 	SetPause(isPause);
 	dt.SetPause(isPause);
+}
+
+void Xplay::SliderPress()
+{
+	isSliderPress = true;
+}
+
+void Xplay::SliderRelease()
+{
+	isSliderPress = false;
+	auto pos = 0.0;
+	pos = static_cast<double>(ui.playPos->value()) / static_cast<double>(ui.playPos->maximum());
+	dt.Seek(pos);
 }

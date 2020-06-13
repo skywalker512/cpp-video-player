@@ -1,14 +1,22 @@
 #include "XDecodeThread.h"
 #include "XDecode.h"
 #include <QDebug>
+#include "XVideoThread.h"
+#include "XAudioThread.h"
 
-void XDecodeThread::Push(AVPacket* pkt)
+void XDecodeThread::Push(AVPacket* pkt, XAudioThread* at, XVideoThread* vt, long long &pts)
 {
 	if (!pkt)return;
-	//阻塞
 	while (!isExit)
 	{
+		// 阻断在这里
 		mux.lock();
+		//音视频同步
+		if (vt && at)
+		{
+			pts = at->pts;
+			vt->synpts = at->pts;
+		}
 		if (packs.size() < maxList)
 		{
 			packs.push_back(pkt);
@@ -16,6 +24,7 @@ void XDecodeThread::Push(AVPacket* pkt)
 			break;
 		}
 		mux.unlock();
+		msleep(1);
 	}
 }
 

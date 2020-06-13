@@ -52,6 +52,16 @@ public:
 		mux.unlock();
 	}
 
+	void Clear() override
+	{
+		mux.lock();
+		if (io)
+		{
+			io->reset();
+		}
+		mux.unlock();
+	}
+
 	bool Open() override
 	{
 		Close();
