@@ -35,6 +35,12 @@ void XVideoThread::run()
 	while (!isExit)
 	{
 		vmux.lock();
+		if (isPause)
+		{
+			vmux.unlock();
+			msleep(5);
+			continue; 
+		}
 		if (synpts > 0 && synpts < decode->pts)
 		{
 			vmux.unlock();
@@ -71,4 +77,11 @@ XVideoThread::XVideoThread()
 
 XVideoThread::~XVideoThread()
 {
+}
+
+void XVideoThread::SetPause(bool isPause)
+{
+	vmux.lock();
+	this->isPause = isPause;
+	vmux.unlock();
 }

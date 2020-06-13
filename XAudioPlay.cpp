@@ -10,7 +10,7 @@ public:
 	QIODevice* io = nullptr;
 	std::mutex mux;
 
-	virtual long long GetNoPlayMs()
+	long long GetNoPlayMs() override
 	{
 		mux.lock();
 		if (!output)
@@ -22,7 +22,7 @@ public:
 		//还未播放的字节数
 		double size = output->bufferSize() - output->bytesFree();
 		//一秒音频字节大小
-		double secSize = sampleRate * (sampleSize / 8) *channels;
+		double secSize = sampleRate * (sampleSize / 8) * channels;
 		if (secSize <= 0)
 		{
 			pts = 0;
@@ -34,7 +34,7 @@ public:
 		mux.unlock();
 		return pts;
 	}
-	
+
 	void Close() override
 	{
 		mux.lock();
@@ -98,6 +98,25 @@ public:
 		int free = output->bytesFree();
 		mux.unlock();
 		return free;
+	}
+
+	void SetPause(bool isPause) override
+	{
+		mux.lock();
+		if (!output)
+		{
+			mux.unlock();
+			return;
+		}
+		if (isPause)
+		{
+			output->suspend();
+		}
+		else
+		{
+			output->resume();
+		}
+		mux.unlock();
 	}
 };
 

@@ -16,6 +16,8 @@ public:
 	void run() override;
 	XAudioThread();
 	virtual ~XAudioThread();
+	void SetPause(bool isPause);
+	bool isPause = false;
 protected:
 	std::mutex amux;
 	XAudioPlay* ap = nullptr;

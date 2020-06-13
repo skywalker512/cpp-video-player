@@ -19,6 +19,8 @@ public:
 	virtual ~XVideoThread();
 	//同步时间，由外部传入
 	long long synpts = 0;
+	void SetPause(bool isPause);
+	bool isPause = false;
 protected:
 	std::mutex vmux;
 	IVideoCall* call = nullptr;

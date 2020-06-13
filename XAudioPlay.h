@@ -20,4 +20,6 @@ public:
 	static XAudioPlay* Get();
 	XAudioPlay();
 	virtual ~XAudioPlay();
+
+	virtual void SetPause(bool isPause) = 0;
 };

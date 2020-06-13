@@ -37,6 +37,7 @@ void Xplay::resizeEvent(QResizeEvent* e)
 	// 移动控件位置
 	ui.playPos->move(50, this->height() - 50);
 	ui.openFile->move(50, this->height() - 100);
+	ui.isplay->move(ui.openFile->x() + ui.openFile->width() + 10, ui.openFile->y());
 
 	// 滑动条宽度变化
 	ui.playPos->resize(this->width() - 100, ui.playPos->height());
@@ -56,6 +57,17 @@ void Xplay::mouseDoubleClickEvent(QMouseEvent* e)
 	}
 }
 
+void Xplay::SetPause(bool isPause)
+{
+	if (isPause)
+	{
+		ui.isplay->setText(QString::fromLocal8Bit("播放"));
+	} else
+	{
+		ui.isplay->setText(QString::fromLocal8Bit("暂停"));
+	}
+}
+
 void Xplay::OpenFile()
 {
 	// 选择文件
@@ -67,4 +79,12 @@ void Xplay::OpenFile()
 	{
 		QMessageBox::information(nullptr, "error", "open file failed!");
 	}
+	SetPause(dt.isPause);
+}
+
+void Xplay::PlayOrPause()
+{
+	auto isPause = !dt.isPause;
+	SetPause(isPause);
+	dt.SetPause(isPause);
 }

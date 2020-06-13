@@ -12,6 +12,13 @@ void XDemuxThread::run()
 	{
 		mux.lock();
 
+		if (isPause)
+		{
+			mux.unlock();
+			msleep(5);
+			continue;
+		}
+
 		//ÒôÊÓÆµÍ¬²½
 		if (vt && at)
 		{
@@ -119,4 +126,19 @@ XDemuxThread::~XDemuxThread()
 {
 	isExit = true;
 	wait();
+}
+
+void XDemuxThread::SetPause(bool isPause)
+{
+	mux.lock();
+	this->isPause = isPause;
+	if (at)
+	{
+		at->SetPause(isPause);
+	}
+	if (vt)
+	{
+		vt->SetPause(isPause);
+	}
+	mux.unlock();
 }

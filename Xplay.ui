@@ -26,8 +26,8 @@
   <widget class="QPushButton" name="openFile">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>640</y>
+     <x>31</x>
+     <y>641</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -50,6 +50,19 @@
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="isplay">
+   <property name="geometry">
+    <rect>
+     <x>112</x>
+     <y>641</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>播放</string>
    </property>
   </widget>
  </widget>
@@ -81,8 +94,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>isplay</sender>
+   <signal>clicked()</signal>
+   <receiver>XplayClass</receiver>
+   <slot>PlayOrPause()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>143</x>
+     <y>773</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OpenFile()</slot>
+  <slot>PlayOrPause()</slot>
  </slots>
 </ui>
