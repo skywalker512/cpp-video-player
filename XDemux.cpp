@@ -1,5 +1,6 @@
 #include "XDemux.h"
 #include <iostream>
+#include <QDebug>
 using namespace std;
 
 extern "C" {
@@ -60,7 +61,7 @@ bool XDemux::Open(const char* url)
 
 	width = as->codecpar->width;
 	height = as->codecpar->height;
-	
+
 	cout << "=======================================================" << endl;
 	cout << videoStream << "视频信息" << endl;
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
@@ -75,10 +76,10 @@ bool XDemux::Open(const char* url)
 	//获取音频流
 	audioStream = av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
 	as = ic->streams[audioStream];
-	
+
 	sampleRate = as->codecpar->sample_rate;
 	channels = as->codecpar->channels;
-	
+
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
 	cout << "format = " << as->codecpar->format << endl;
 	cout << "sample_rate = " << as->codecpar->sample_rate << endl;
@@ -113,6 +114,31 @@ AVPacket* XDemux::Read()
 	pkt->pts = pkt->pts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
 	pkt->dts = pkt->dts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
 	mux.unlock();
+	return pkt;
+}
+
+AVPacket* XDemux::ReadVideo()
+{
+	mux.lock();
+	if (!ic) //容错
+	{
+		mux.unlock();
+		return nullptr;
+	}
+	mux.unlock();
+
+	AVPacket* pkt = nullptr;
+	//防止阻塞
+	for (int i = 0; i < 20; i++)
+	{
+		pkt = Read();
+		if (!pkt)break;
+		if (pkt->stream_index == videoStream)
+		{
+			break;
+		}
+		av_packet_free(&pkt);
+	}
 	return pkt;
 }
 
@@ -211,8 +237,10 @@ bool XDemux::Seek(double pos)
 	avformat_flush(ic);
 
 	long long seekPos = 0;
-	seekPos = ic->streams[videoStream]->duration * pos;
+	seekPos = ic->duration * pos / 1000;
+	qDebug() << seekPos;
 	auto re = av_seek_frame(ic, videoStream, seekPos, AVSEEK_FLAG_BACKWARD | AVSEEK_FLAG_FRAME);
+
 	mux.unlock();
 	if (re < 0) return false;
 	return true;

@@ -15,6 +15,9 @@ public:
 	//空间需要调用者释放 ，释放AVPacket对象空间，和数据空间 av_packet_free
 	virtual AVPacket* Read();
 
+	//只读视频，音频丢弃空间释放
+	virtual AVPacket *ReadVideo();
+	
 	virtual bool IsAudio(AVPacket *pkt);
 	
 	XDemux();

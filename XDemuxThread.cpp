@@ -152,13 +152,8 @@ void XDemuxThread::Seek(double pos)
 	long long seekPts = pos * demux->totalMs;
 	while (!isExit)
 	{
-		AVPacket* pkt = demux->Read();
+		AVPacket* pkt = demux->ReadVideo();
 		if (!pkt) break;
-		if (pkt->stream_index == demux->audioStream)
-		{
-			av_packet_free(&pkt);
-			continue;
-		}
 		//如果解码到seekPts
 		auto re = vt->decode->Send(pkt);
 		if (!re) break;
