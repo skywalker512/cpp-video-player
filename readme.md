@@ -12,11 +12,11 @@
 
 ## UML类图
 
-![image-20200616175340404](redme.assets/image-20200616175340404.png)
+![image-20200616181223194](readme.assets/image-20200616181223194.png)
 
 ## 开始播放部分流程示意图
 
-![image-20200616175413026](redme.assets/image-20200616175413026.png)
+![xplay1](readme.assets/xplay1.png)
 
 ## 值得注意的点
 
@@ -37,7 +37,7 @@ if (&& synpts < decode->pts)
 
 因为视频文件封装格式千差万别，而大多数都不满足视频数据和音频数据相邻放置，所以需要一定的缓存队列。
 
-![image-20200616175625302](redme.assets/image-20200616175625302.png)
+![image-20200616175625302](readme.assets/image-20200616175625302.png)
 
 ### YUV420P -> RGB
 
@@ -70,7 +70,7 @@ void main(void)
 
 ### 视频数据对齐
 
-![image-20200616175903157](redme.assets/image-20200616175903157.png)
+![image-20200616175903157](readme.assets/image-20200616175903157.png)
 
 因为行数据并有些时候并不是完整的宽度，所以我们只拷贝有用的数据来，使用 for 循环，每次只拷贝行宽度的数据。
 
